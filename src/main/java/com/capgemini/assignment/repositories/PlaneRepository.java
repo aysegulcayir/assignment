@@ -26,4 +26,35 @@ public class PlaneRepository implements IPlaneRepository{
         this.planes.add(plane);
         return plane;
     }
-}
+
+
+
+        public Plane getPlaneByName(Plane plane) {
+            for (Plane plane1 : planes) {
+                if (plane1.getName() == plane.getName()) {
+                    return plane1;
+                }
+            }
+            return null;
+        }
+        public Plane updatePlane(Plane plane){
+            Plane tempBook = getPlaneByName(plane);
+            if(tempBook==null){
+                return null;
+            }
+            tempBook.setCaptain(plane.getCaptain());
+            return tempBook;
+
+        }
+
+    public void deletePlane(Plane plane) {
+        for(Plane plane1:planes){
+            if (plane1.getName()==plane.getName()){
+                planes.remove(plane);
+                break;
+            }
+
+        }
+    }
+    }
+

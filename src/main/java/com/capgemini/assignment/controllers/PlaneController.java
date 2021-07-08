@@ -30,4 +30,13 @@ public class PlaneController {
     public void createPlane(@RequestBody Plane newPlane){
         this.planeRepository.savePlane(newPlane);
     }
+    @PutMapping("/update")
+    public Plane updatePlane(@RequestBody Plane changePlane){
+        return this.planeRepository.updatePlane(changePlane);
+    }
+
+    @PostMapping("/delete")
+    public void deletePlane(@RequestBody Plane deletePlane){
+        this.planeRepository.deletePlane(deletePlane);
+    }
 }

@@ -7,4 +7,6 @@ import java.util.List;
 public interface IPlaneRepository {
     List<Plane> getPlanes();
     Plane savePlane(Plane plane);
+    Plane updatePlane(Plane plane);
+    void deletePlane(Plane plane);
 }
