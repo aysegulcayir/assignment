@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to the Airplane</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+
+function getData() {
+$.ajax({
+url: 'http://localhost:8080/api/planes/all',
+type: 'get',
+success: function (data) {
+$('#tblPlane').empty();
+$.each(data, function (index, value) {
+$('#tblPlane').append( '<tr><td>' + value.name + '</td><td>' + value.capacity +'</td><td>' +
+ value.captain+'</td><td> <button>UPDATE</button> '+'</td><td> <button>DELETE</button> '+'</td></tr>');
+});
+}
+});
+}
+
+      function postData() {
+            // Check if names and capacity of the plane are not empty
+            if (!$('#txtPlane').val() || !$('#intCapacity').val() || !$('#txtCaptain').val()) {
+                $('#alert').show();
+            } else {
+                $('#alert').hide();
+                var nameFromInput = $("#txtPlane").val();
+                var capacityFromInput = $("#intCapacity").val();
+                var captainFromInput = $("#txtCaptain").val();
+
+                var plane = {
+                    name: nameFromInput,
+                    capacity: capacityFromInput,
+                    captain: captainFromInput
+                };
+
+                var planeJson = JSON.stringify(plane);
+
+                //Do POST request with body.
+                $.ajax({
+                    url: 'http://localhost:8080/api/planes/new',
+                    type: 'post',
+                    data: planeJson,
+                    contentType: "application/json",
+                    success: function (data) {
+                            getData();
+                        //Reset form
+                        $('#txtPlane').val('');
+                        $('#intCapacity').val('');
+                        $('#txtCaptain').val('');
+
+                    }
+                });
+            }
+        }
+         $(function () {
+            getData();
+        })
+
+ </script>
+</head>
+<body>
+<div>
+    </br></br>
+    <table>
+
+        <tr>
+            <td>Plane Name</td>
+            <td><input type="text" id = "txtPlane"></td>
+        </tr>
+        <tr>
+            <td>Capacity</td>
+            <td><input type="number" id = "intCapacity"></td>
+        </tr>
+        <tr>
+            <td>Captain Name</td>
+            <td><input type="text" id = "txtCaptain"></td>
+        </tr>
+
+
+    </table>
+
+    </br></br>
+
+    <tr >
+        <td>
+        <button onclick="postData()">Add a Plane</button>
+        </td>
+        <td>
+        <button onclick="getData()">Show All Planes</button>
+        </td>
+    </tr>
+    </br></br>
+    <table border = "1" id = "tblPlane">
+        <thead>
+        <tr>
+            <th>Plane Name</th>
+            <th>Capacity</th>
+            <th>Captain Name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
